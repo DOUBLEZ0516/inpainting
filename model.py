@@ -6,6 +6,7 @@ from glob import glob
 import tensorflow as tf
 import numpy as np
 from six.moves import xrange
+from tensorflow.python.framework import graph_util
 
 from ops import *
 from utils import *
@@ -187,6 +188,11 @@ class DCGAN(object):
     else:
       print(" [!] Load failed...")
 
+    sess = tf.Session()
+    op = sess.graph.get_operations()
+    print ([m.values() for m in op][1])
+    #print ([n.name for n in tf.get_default_graph().as_graph_def().node])
+
     for epoch in xrange(config.epoch):
       if config.dataset == 'mnist':
         batch_idxs = min(len(self.data_X), config.train_size) // config.batch_size
@@ -307,6 +313,14 @@ class DCGAN(object):
 
         if np.mod(counter, 500) == 2:
           self.save(config.checkpoint_dir, counter)
+
+        if np.mod(counter, 5) == 4:
+          vars_list = ['z', 'generator/Tanh', 'Mean_2', 'real_images', 'discriminator/Sigmoid']
+          graph_def = tf.get_default_graph().as_graph_def()
+          constant_graph = graph_util.convert_variables_to_constants(self.sess, graph_def, vars_list)
+          with tf.gfile.FastGFile('./checkpoint/model1.pb', mode='wb') as f:
+            f.write(constant_graph.SerializeToString())
+          #tf.train.write_graph(constant_graph, './checkpoint', 'model4.pb', as_text=False)
 
   def discriminator(self, image, y=None, reuse=False):
     with tf.variable_scope("discriminator") as scope:
