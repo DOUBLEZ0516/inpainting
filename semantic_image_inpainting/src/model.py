@@ -34,19 +34,18 @@ class ModelInpaint():
                                                          model_name)
 
         self.gi = self.graph.get_tensor_by_name(model_name+'/'+gen_input)
-        self.go = self.graph.get_tensor_by_name(model_name+'/'  +gen_output)
-        #self.go = self.graph.get_tensor_by_name(model_name+'/' + 'generator/' +gen_output)
+        #self.go = self.graph.get_tensor_by_name(model_name+'/'  +gen_output)
+        self.go = self.graph.get_tensor_by_name(model_name+'/' + 'generator/' +gen_output)
         self.gl = self.graph.get_tensor_by_name(model_name+'/'+gen_loss)
         self.di = self.graph.get_tensor_by_name(model_name+'/'+disc_input)
-        self.do = self.graph.get_tensor_by_name(model_name+'/' + disc_output)
-        #self.do = self.graph.get_tensor_by_name(model_name+'/'+ 'discriminator/' + disc_output)
+        #self.do = self.graph.get_tensor_by_name(model_name+'/' + disc_output)
+        self.do = self.graph.get_tensor_by_name(model_name+'/'+ 'discriminator/' + disc_output)
         self.image_shape = self.go.shape[1:].as_list()
 
         self.l = config.lambda_p
 
         self.sess = tf.Session(graph=self.graph)
-
-        self.init_z()
+ 
 
     def init_z(self):
         """Initializes latent variable z"""
@@ -78,6 +77,7 @@ class ModelInpaint():
             mask = imask
         mask = ModelInpaint.create3ChannelMask(mask)
         
+
         bin_mask = ModelInpaint.binarizeMask(imask, dtype='uint8')
         self.bin_mask = ModelInpaint.create3ChannelMask(bin_mask)
 
@@ -119,6 +119,8 @@ class ModelInpaint():
             images_out = np.multiply(images_out, 1-self.masks_data) \
                          + np.multiply(images_in, self.masks_data)
 
+        for i in range(len(g_out)):
+            images_out[i,:,:,:] += images_in[i,0,0,0] - images_out[i,0,0,0]
         return images_out
 
     def build_inpaint_graph(self):
@@ -139,6 +141,8 @@ class ModelInpaint():
             self.perceptual_loss = self.gl
             self.inpaint_loss = self.context_loss + self.l*self.perceptual_loss
             self.inpaint_grad = tf.gradients(self.inpaint_loss, self.gi)
+            #masks gradient
+            self.masks_grad = tf.gradients(self.context_loss, self.masks_data)
 
     def inpaint(self, image, mask, blend=True):
         """Perform inpainting with the given image and mask with the standard
@@ -171,18 +175,21 @@ class ModelInpaint():
         """
         v = 0
         for i in range(self.config.nIter):
-            out_vars = [self.inpaint_loss, self.inpaint_grad, self.go]
+            out_vars = [self.inpaint_loss, self.inpaint_grad, self.go, self.masks_grad]
             in_dict = {self.masks: self.masks_data,
                        self.gi: self.z,
                        self.images: self.images_data}
 
-            loss, grad, imout = self.sess.run(out_vars, feed_dict=in_dict)
+            loss, grad, imout, masks_grad = self.sess.run(out_vars, feed_dict=in_dict)
 
             v_prev = np.copy(v)
             v = self.config.momentum*v - self.config.lr*grad[0]
             self.z += (-self.config.momentum * v_prev +
                        (1 + self.config.momentum) * v)
             self.z = np.clip(self.z, -1, 1)
+
+            #update mask_data
+            self.masks_data -= self.config.lr * masks_grad
 
             if verbose:
                 print('Iteration {}: {}'.format(i, np.mean(loss)))
