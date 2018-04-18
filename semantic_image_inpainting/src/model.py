@@ -46,6 +46,7 @@ class ModelInpaint():
 
         self.sess = tf.Session(graph=self.graph)
  
+        self.init_z()
 
     def init_z(self):
         """Initializes latent variable z"""
@@ -142,7 +143,7 @@ class ModelInpaint():
             self.inpaint_loss = self.context_loss + self.l*self.perceptual_loss
             self.inpaint_grad = tf.gradients(self.inpaint_loss, self.gi)
             #masks gradient
-            self.masks_grad = tf.gradients(self.context_loss, self.masks_data)
+            #self.masks_grad = tf.gradients(self.context_loss, self.masks_data)
 
     def inpaint(self, image, mask, blend=True):
         """Perform inpainting with the given image and mask with the standard
@@ -175,11 +176,13 @@ class ModelInpaint():
         """
         v = 0
         for i in range(self.config.nIter):
-            out_vars = [self.inpaint_loss, self.inpaint_grad, self.go, self.masks_grad]
+            #out_vars = [self.inpaint_loss, self.inpaint_grad, self.go, self.masks_grad]
+            out_vars = [self.inpaint_loss, self.inpaint_grad, self.go]
             in_dict = {self.masks: self.masks_data,
                        self.gi: self.z,
                        self.images: self.images_data}
 
+            #loss, grad, imout, masks_grad = self.sess.run(out_vars, feed_dict=in_dict)
             loss, grad, imout, masks_grad = self.sess.run(out_vars, feed_dict=in_dict)
 
             v_prev = np.copy(v)
@@ -189,7 +192,7 @@ class ModelInpaint():
             self.z = np.clip(self.z, -1, 1)
 
             #update mask_data
-            self.masks_data -= self.config.lr * masks_grad
+            #self.mask_data += self.config.lr * masks_data
 
             if verbose:
                 print('Iteration {}: {}'.format(i, np.mean(loss)))
