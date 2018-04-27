@@ -54,7 +54,7 @@ python3 src/inpaint.py --model_file graphs/model2.pb \
     --nIter 1000 --blend --Wstep 100
 ```
 
-To generate result on improved resolution of resized images of cars
+To generate result on improved resolution of resized images of cars \
 for images resized from 64 * 64 to 128 * 128
 ```
 python3 src/inpaint.py --model_file graphs/model2.pb \
