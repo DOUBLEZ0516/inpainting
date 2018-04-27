@@ -20,9 +20,8 @@ parser.add_argument('--outDir', type=str, default='completions')
 parser.add_argument('--blend', action='store_true', default=False,
                     help="Blend predicted image to original image")
 parser.add_argument('--maskType', type=str,
-                    choices=['random', 'center', 'left', 'mask_64_128', 'mask_32_128'],
+                    choices=['random', 'center', 'mask_64_128', 'mask_32_128'],
                     default='center')
-
 parser.add_argument('--maskThresh', type=int,
                     default=128,
                     help='Threshold in case input mask is not binary')
@@ -77,10 +76,6 @@ def gen_mask(maskType):
         l = int(args.imgSize*scale)
         u = int(args.imgSize*(1.0-scale))
         mask[l:u, l:u] = 0.0
-    elif maskType == 'left':
-        mask = np.ones(image_shape)
-        c = args.imgSize // 2
-        mask[:, :c] = 0.0
     elif maskType == 'mask_64_128':
         mask = np.ones([128,128])
         for i in range(64):
