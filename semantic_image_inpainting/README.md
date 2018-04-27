@@ -49,7 +49,7 @@ python3 src/inpaint.py --model_file graphs/dcgan-100.pb \
 To generate result on 64 * 64 car data set
 ```
 python3 src/inpaint.py --model_file graphs/model2.pb \
-    --maskType center --inDir testcars \
+    --maskType random --inDir testcars \
     --nIter 1000 --blend --Wstep 100 --imgExt jpg
 ```
 
