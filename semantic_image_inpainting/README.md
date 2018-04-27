@@ -1,13 +1,6 @@
 Semantic Image Inpainting With Deep Generative Models
 =====================================================
-[[Project]](http://www.isle.illinois.edu/~yeh17/projects/semantic_inpaint/index.html)
-[[arXiv]](https://arxiv.org/abs/1607.07539)
-
-Tensorflow implementation for semantic image inpainting:
-
-![](http://www.isle.illinois.edu/~yeh17/projects/semantic_inpaint/img/process.png)
-
-Semantic Image Inpainting With Deep Generative Models
+Implementation of Semantic Image Inpainting With Deep Generative Models
 
 [Raymond A. Yeh*](http://www.isle.illinois.edu/~yeh17/),
 [Chen Chen*](http://cchen156.web.engr.illinois.edu/),
@@ -18,14 +11,12 @@ Semantic Image Inpainting With Deep Generative Models
 
 In CVPR 2017
 
-\* indicating equal contributions.
 
 Overview
 --------
 Implementation of proposed cost function and backpropogation to input. 
 
-In this code release, we load a pretrained DCGAN model, and apply our proposed
-objective function for the task of image completion
+We also made an improvement on trianing weight mask W.
 
 Dependencies
 ------------
@@ -33,58 +24,46 @@ Dependencies
  - scipy + PIL/pillow (image io)
  - pyamg (for Poisson blending)
 
-Tested to work with both Python 2.7 and Python 3.5
+Tested to work with Python 3.5
 
 
 Files
 -----
- - src/model.py - Main implementation
- - src/inpaint.py - command line application
- - src/external - external code used. Citations in code
- - graphs/dcgan-100.pb - frozen pretrained DCGAN with 100-dimension latent space
- 
-Weights
--------
-
-Git doesn't work nicely with large binary files. Please download our weights from 
-[here](https://www.dropbox.com/s/3uo97fzu4jfi2ms/dcgan-100.pb?dl=0), trained on the 
-[CelebA dataset](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html).
-
-Alternatively, train your own GAN using your dataset. Conversion from checkpoint to 
-Tensorflow ProtoBuf format can be done with 
-[this script](https://gist.github.com/moodoki/e37a85fb0258b045c005ca3db9cbc7f6)
-
+ - src/model.py: implementation of semantic inpaint model
+ - src/inpaint.py: command line application, which passes user defined parameters to model.py
+ - src/external: external code used. Includs Poisson blending.
+ - graphs：contains pre-trained gan .pb files
+     - dcgan-100.pb: gan trained on 64 * 64 CelebA
+     - model2.pb: gan trained on 64 * 64 Stanford Cars
+     - model_128_64_64_1.pb: gan trained on 128 * 128 Stanford Car
 
 Running
 -------
-
-
-Generate multiple candidates for completion:
+To generate result on 64 * 64 face data set
 ```
-python src/inpaint.py --model_file graphs/dcgan-100.pb \
-    --maskType center --in_image testimages/face1.png \
-    --nIter 1000 --blend
-```
-
-Generate completions for multiple input images:
-```
-python src/inpaint.py --model_file graphs/dcgan-100.pb \
+python3 src/inpaint.py --model_file graphs/dcgan-100.pb \
     --maskType center --inDir testimages \
-    --nIter 1000 --blend
+    --nIter 1000 --blend --Wstep 100
 ```
 
+To generate result on 64 * 64 car data set
+```
+python3 src/inpaint.py --model_file graphs/model2.pb \
+    --maskType random --inDir testcars \
+    --nIter 1000 --blend --Wstep 100 --imgExt jpg
+```
 
-Citation
---------
+To generate result on improved resolution of resized images of cars \
+for images resized from 64 * 64 to 128 * 128
+```
+python3 src/inpaint.py --model_file graphs/model_128_64_64_1.pb \
+    --maskType mask_64_128 --inDir testcars_128 --imgSize 128\
+    --nIter 1000 --blend --Wstep 1000 --imgExt jpeg
+```
 
-~~~
-@inproceedings{
-    yeh2017semantic,
-    title={Semantic Image Inpainting with Deep Generative Models},
-    author={Yeh$^\ast$, Raymond A. and Chen$^\ast$, Chen and Lim, Teck Yian and Schwing Alexander G. and Hasegawa-Johnson, Mark and Do, Minh N.},
-    booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
-    year={2017},
-    note = {$^\ast$ equal contribution},
-}
-~~~
-
+for images resized from 32 * 32 to 128 * 128
+```
+python3 src/inpaint.py --model_file graphs/model_128_64_64_1.pb \
+    --maskType mask_32_128 --inDir testcars_128 --imgSize 128\
+    --nIter 1000 --blend --Wstep 1000 --imgExt jpeg
+```

@@ -20,11 +20,8 @@ parser.add_argument('--outDir', type=str, default='completions')
 parser.add_argument('--blend', action='store_true', default=False,
                     help="Blend predicted image to original image")
 parser.add_argument('--maskType', type=str,
-                    choices=['random', 'center', 'left', 'file', 'mask_64_128', 'mask_32_128'],
+                    choices=['random', 'center', 'mask_64_128', 'mask_32_128'],
                     default='center')
-parser.add_argument('--maskFile', type=str,
-                    default=None,
-                    help='Input binary mask for file mask type')
 parser.add_argument('--maskThresh', type=int,
                     default=128,
                     help='Threshold in case input mask is not binary')
@@ -34,16 +31,24 @@ parser.add_argument('--inDir', type=str, default=None,
                     help='Path to input images')
 parser.add_argument('--imgExt', type=str, default='png',
                     help='input images file extension')
+parser.add_argument('--Wstep', type = int, default = 100,
+                    help='step to update weighted matrix W, set Wstep = nIter to disable update on W')
 
 args = parser.parse_args()
 
 
 def loadimage(filename):
+    """
+    This function loads input images
+    """
     img = scipy.misc.imread(filename, mode='RGB').astype(np.float)
     return img
 
 
-def saveimages(outimages, prefix='samples'):
+def saveimages(outimages, prefix='gen'):
+    """
+    This function writes generated images
+    """
     numimages = len(outimages)
 
     if not os.path.exists(args.outDir):
@@ -56,6 +61,9 @@ def saveimages(outimages, prefix='samples'):
 
 
 def gen_mask(maskType):
+    """
+    This function generates input masks
+    """
     image_shape = [args.imgSize, args.imgSize]
     if maskType == 'random':
         fraction_masked = 0.2
@@ -63,50 +71,34 @@ def gen_mask(maskType):
         mask[np.random.random(image_shape[:2]) < fraction_masked] = 0.0
     elif maskType == 'center':
         scale = 0.25
-        assert(scale <= 0.5)
+        assert (scale <= 0.5)
         mask = np.ones(image_shape)
         sz = args.imgSize
-        l = int(args.imgSize*scale)
-        u = int(args.imgSize*(1.0-scale))
+        l = int(args.imgSize * scale)
+        u = int(args.imgSize * (1.0 - scale))
         mask[l:u, l:u] = 0.0
-    elif maskType == 'left':
-        mask = np.ones(image_shape)
-        c = args.imgSize // 2
-        mask[:, :c] = 0.0
-    elif maskType == 'file':
-        mask = loadmask(args.maskfile, args.maskthresh)
     elif maskType == 'mask_64_128':
-        mask = np.ones([128,128])
+        mask = np.ones([128, 128])
         for i in range(64):
-            mask[2*i,:] = 0
-            mask[:,2*i] = 0
+            mask[2 * i, :] = 0
+            mask[:, 2 * i] = 0
     elif maskType == 'mask_32_128':
         mask = np.zeros([128, 128])
-        mask[:,::4][::4,:] = 1
+        mask[:, ::4][::4, :] = 1
     else:
-        assert(False)
-    return mask
-
-
-def loadmask(filename, thresh=128):
-    immask = scipy.misc.imread(filename, mode='L')
-    image_shape = [args.imgSize, args.imgSize]
-    mask = np.ones(image_shape)
-    mask[immask < 128] = 0
-    mask[immaks >= 128] = 1
+        assert (False)
     return mask
 
 
 def main():
+    """
+    Main function
+    """
     m = ModelInpaint(args.model_file, args)
-
-    # Generate some samples from the model as a test
-    imout = m.sample()
-    saveimages(imout)
 
     mask = gen_mask(args.maskType)
     if args.inDir is not None:
-        imgfilenames = glob( args.inDir + '/*.' + args.imgExt )
+        imgfilenames = glob(args.inDir + '/*.' + args.imgExt)
         print('{} images found'.format(len(imgfilenames)))
         in_img = np.array([loadimage(f) for f in imgfilenames])
     elif args.in_image is not None:
