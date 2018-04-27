@@ -56,14 +56,14 @@ python3 src/inpaint.py --model_file graphs/model2.pb \
 To generate result on improved resolution of resized images of cars \
 for images resized from 64 * 64 to 128 * 128
 ```
-python3 src/inpaint.py --model_file graphs/mode_128_64_64_1.pb \
+python3 src/inpaint.py --model_file graphs/model_128_64_64_1.pb \
     --maskType mask_64_128 --inDir testcars_128 --imgSize 128\
     --nIter 1000 --blend --Wstep 1000 --imgExt jpeg
 ```
 
 for images resized from 32 * 32 to 128 * 128
 ```
-python3 src/inpaint.py --model_file graphs/mode_128_64_64_1.pb \
+python3 src/inpaint.py --model_file graphs/model_128_64_64_1.pb \
     --maskType mask_32_128 --inDir testcars_128 --imgSize 128\
     --nIter 1000 --blend --Wstep 1000 --imgExt jpeg
 ```
