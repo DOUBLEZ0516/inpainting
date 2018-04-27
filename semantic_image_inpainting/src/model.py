@@ -5,6 +5,9 @@ from scipy.signal import convolve2d
 
 
 class ModelInpaint():
+    """
+    
+    """
     def __init__(self, modelfilename, config,
                  model_name='dcgan',
                  gen_input='z:0', gen_output='Tanh:0', gen_loss='Mean_2:0',
