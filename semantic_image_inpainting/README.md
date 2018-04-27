@@ -64,7 +64,7 @@ python3 src/inpaint.py --model_file graphs/model2.pb \
 
 for images resized from 32 * 32 to 128 * 128
 ```
-python3 src/inpaint.py --model_file graphs/model2.pb \
+python3 src/inpaint.py --model_file graphs/mode_128_64_64_1.pb \
     --maskType mask_32_128 --inDir testcars_128 \
     --nIter 1000 --blend --Wstep 100
 ```
