@@ -37,11 +37,11 @@ Files
 
 Running
 -------
-Train and generate for test images
+To visualize the result on 64 * 64 face data set
 ```
-python src/inpaint.py --model_file graphs/dcgan-100.pb \
+python3 src/inpaint.py --model_file graphs/dcgan-100.pb \
     --maskType center --inDir testimages \
-    --nIter 1000 --blend
+    --nIter 1000 --blend --Wstep 100
 ```
 
 
