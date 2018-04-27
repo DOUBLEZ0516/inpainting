@@ -24,7 +24,7 @@ To train a model with prepocessed dataset:
 
 ## Results
 
-![result](assets/faces.png)
+![result](assets/fig3.png)
 
 ## Author
 
