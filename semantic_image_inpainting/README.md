@@ -29,12 +29,12 @@ Tested to work with both Python 2.7 and Python 3.5
 
 Files
 -----
- - src/model.py： implementation of semantic inpaint model
- - src/inpaint.py： command line application, which passes user defined parameters to model.py
- - src/external： external code used. Includs Poisson blending.
+ - src/model.py: implementation of semantic inpaint model
+ - src/inpaint.py: command line application, which passes user defined parameters to model.py
+ - src/external: external code used. Includs Poisson blending.
  - graphs：contains pre-trained gan .pb files
-     - dcgan-100.pb： gan trained on 64 * 64 CelebA
-     - model2.pb gan： gan trained on 64 * 64 Stanford Cars
+     - dcgan-100.pb: gan trained on 64 * 64 CelebA
+     - model2.pb: gan trained on 64 * 64 Stanford Cars
      - model_128_64_64_1.pb: gan trained on 128 * 128 Stanford Car
 
 Running
