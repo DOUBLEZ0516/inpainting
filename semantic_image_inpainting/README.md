@@ -34,6 +34,8 @@ Files
  - src/inpaint.py - command line application, which passes user defined parameters to model.py
  - src/external - external code used. Includs Poisson blending.
  - graphs - contains pre-trained gan .pb files
+            dcgan-100.pb gan trained on 64 * 64 celebA
+            model2.pb gan trained on 64 * 64 Stanford car
 
 Running
 -------
