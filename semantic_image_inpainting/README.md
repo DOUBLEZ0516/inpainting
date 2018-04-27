@@ -34,16 +34,37 @@ Files
  - src/inpaint.py： command line application, which passes user defined parameters to model.py
  - src/external： external code used. Includs Poisson blending.
  - graphs：contains pre-trained gan .pb files
-     - dcgan-100.pb gan trained on 64 * 64 celebA
-     - model2.pb gan trained on 64 * 64 Stanford car
+     - dcgan-100.pb： gan trained on 64 * 64 CelebA
+     - model2.pb gan： gan trained on 64 * 64 Stanford Car
+     - model_128_64_64_1.pb: gan trained on 128 * 128 Stanford Car
 
 Running
 -------
-To visualize the result on 64 * 64 face data set
+To generate result on 64 * 64 face data set
 ```
 python3 src/inpaint.py --model_file graphs/dcgan-100.pb \
     --maskType center --inDir testimages \
     --nIter 1000 --blend --Wstep 100
 ```
 
+To generate result on 64 * 64 car data set
+```
+python3 src/inpaint.py --model_file graphs/model2.pb \
+    --maskType center --inDir testcars \
+    --nIter 1000 --blend --Wstep 100
+```
 
+To generate result on improved resolution of resized images of cars
+for images resized from 64 * 64 to 128 * 128
+```
+python3 src/inpaint.py --model_file graphs/model2.pb \
+    --maskType mask_64_128 --inDir testcars \
+    --nIter 1000 --blend --Wstep 100
+```
+
+for images resized from 32 * 32 to 128 * 128
+```
+python3 src/inpaint.py --model_file graphs/model2.pb \
+    --maskType mask_32_128 --inDir testcars_128 \
+    --nIter 1000 --blend --Wstep 100
+```
