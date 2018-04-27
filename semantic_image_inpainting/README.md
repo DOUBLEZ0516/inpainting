@@ -1,13 +1,6 @@
 Semantic Image Inpainting With Deep Generative Models
 =====================================================
-[[Project]](http://www.isle.illinois.edu/~yeh17/projects/semantic_inpaint/index.html)
-[[arXiv]](https://arxiv.org/abs/1607.07539)
-
-Tensorflow implementation for semantic image inpainting:
-
-![](http://www.isle.illinois.edu/~yeh17/projects/semantic_inpaint/img/process.png)
-
-Semantic Image Inpainting With Deep Generative Models
+Implementation of Semantic Image Inpainting With Deep Generative Models
 
 [Raymond A. Yeh*](http://www.isle.illinois.edu/~yeh17/),
 [Chen Chen*](http://cchen156.web.engr.illinois.edu/),
@@ -18,7 +11,6 @@ Semantic Image Inpainting With Deep Generative Models
 
 In CVPR 2017
 
-\* indicating equal contributions.
 
 Overview
 --------
