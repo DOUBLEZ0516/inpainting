@@ -16,8 +16,7 @@ Overview
 --------
 Implementation of proposed cost function and backpropogation to input. 
 
-In this code release, we load a pretrained DCGAN model, and apply our proposed
-objective function for the task of image completion
+We also made an improvement on trianing weight mask W.
 
 Dependencies
 ------------
