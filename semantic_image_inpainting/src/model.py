@@ -6,7 +6,7 @@ from scipy.signal import convolve2d
 
 class ModelInpaint():
     """
-    
+    This function defines the model of inpainting 
     """
     def __init__(self, modelfilename, config,
                  model_name='dcgan',
@@ -204,14 +204,8 @@ class ModelInpaint():
 
     @staticmethod
     def loadpb(filename, model_name='dcgan'):
-        """Loads pretrained graph from ProtoBuf file
-
-        Arguments:
-            filename - path to ProtoBuf graph definition
-            model_name - prefix to assign to loaded graph node names
-
-        Returns:
-            graph, graph_def - as per Tensorflow definitions
+        """
+        This function loads in our pre-trained GAN .pb file
         """
         with tf.gfile.GFile(filename, 'rb') as f:
             graph_def = tf.GraphDef()
@@ -242,27 +236,32 @@ class ModelInpaint():
 
     @staticmethod
     def imtransform(img):
-        """Helper: Rescale pixel value ranges to -1 and 1"""
+        """
+        This function rescales the pixel values into range [-1, 1]
+        """
         return np.array(img) / 127.5-1
 
     @staticmethod
     def iminvtransform(img):
-        """Helper: Rescale pixel value ranges to 0 and 1"""
+        """
+         This function rescales the pixel values into range [0, 1]
+        """
         return (np.array(img) + 1.0) / 2.0
 
     @staticmethod
     def poissonblending(img1, img2, mask):
-        """Helper: interface to external poisson blending"""
+        """
+        This function calls posisson blending in ./src/external/poissionblending.py
+        to blend genrated image with corrupted image.
+        """
         return blending.blend(img1, img2, 1 - mask)
 
     @staticmethod
     def createWeightedMask(mask, nsize=7):
-        """Takes binary weighted mask to create weighted mask as described in 
-        paper.
-
-        Arguments:
-            mask - binary mask input. numpy float32 array
-            nsize - pixel neighbourhood size. default = 7
+        """
+        This function initialized weighted mask W with given input mask.
+        mask: input mask numpy float32 array
+        nsize: window size used to count neighborhood
         """
         ker = np.ones((nsize,nsize), dtype=np.float32)
         ker = ker/np.sum(ker)
