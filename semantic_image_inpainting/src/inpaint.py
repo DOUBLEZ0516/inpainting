@@ -20,11 +20,9 @@ parser.add_argument('--outDir', type=str, default='completions')
 parser.add_argument('--blend', action='store_true', default=False,
                     help="Blend predicted image to original image")
 parser.add_argument('--maskType', type=str,
-                    choices=['random', 'center', 'left', 'file', 'mask_64_128', 'mask_32_128'],
+                    choices=['random', 'center', 'left', 'mask_64_128', 'mask_32_128'],
                     default='center')
-parser.add_argument('--maskFile', type=str,
-                    default=None,
-                    help='Input binary mask for file mask type')
+
 parser.add_argument('--maskThresh', type=int,
                     default=128,
                     help='Threshold in case input mask is not binary')
@@ -39,11 +37,17 @@ args = parser.parse_args()
 
 
 def loadimage(filename):
+  """
+  This function loads input images
+  """
     img = scipy.misc.imread(filename, mode='RGB').astype(np.float)
     return img
 
 
 def saveimages(outimages, prefix='samples'):
+  """
+  This function writes generated images
+  """
     numimages = len(outimages)
 
     if not os.path.exists(args.outDir):
@@ -56,6 +60,10 @@ def saveimages(outimages, prefix='samples'):
 
 
 def gen_mask(maskType):
+  """
+  This function generates input masks
+  """
+  
     image_shape = [args.imgSize, args.imgSize]
     if maskType == 'random':
         fraction_masked = 0.2
@@ -73,8 +81,6 @@ def gen_mask(maskType):
         mask = np.ones(image_shape)
         c = args.imgSize // 2
         mask[:, :c] = 0.0
-    elif maskType == 'file':
-        mask = loadmask(args.maskfile, args.maskthresh)
     elif maskType == 'mask_64_128':
         mask = np.ones([128,128])
         for i in range(64):
@@ -88,16 +94,10 @@ def gen_mask(maskType):
     return mask
 
 
-def loadmask(filename, thresh=128):
-    immask = scipy.misc.imread(filename, mode='L')
-    image_shape = [args.imgSize, args.imgSize]
-    mask = np.ones(image_shape)
-    mask[immask < 128] = 0
-    mask[immaks >= 128] = 1
-    return mask
-
-
 def main():
+  """
+  Main function
+  """
     m = ModelInpaint(args.model_file, args)
 
     # Generate some samples from the model as a test
