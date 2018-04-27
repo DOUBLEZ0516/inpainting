@@ -35,8 +35,8 @@ Files
  - src/external： external code used. Includs Poisson blending.
  - graphs：contains pre-trained gan .pb files
      - dcgan-100.pb： gan trained on 64 * 64 CelebA
-     - model2.pb gan： gan trained on 64 * 64 Stanford Car
-     - model_128_64_64_1.pb: gan trained on 128 * 128 Stanford Car
+     - model2.pb gan： gan trained on 64 * 64 Stanford Cars
+     - model_128_64_64_1.pb: gan trained on 128 * 128 Stanford Car
 
 Running
 -------
