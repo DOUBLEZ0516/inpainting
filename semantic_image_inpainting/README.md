@@ -24,7 +24,7 @@ Dependencies
  - scipy + PIL/pillow (image io)
  - pyamg (for Poisson blending)
 
-Tested to work with both Python 2.7 and Python 3.5
+Tested to work with Python 3.5
 
 
 Files
