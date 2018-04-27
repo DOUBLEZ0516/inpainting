@@ -6,6 +6,7 @@ from tensorflow.python.framework import ops
 
 from utils import *
 
+#be compatible with different tensorflow versions
 try:
   image_summary = tf.image_summary
   scalar_summary = tf.scalar_summary
@@ -52,6 +53,9 @@ def conv_cond_concat(x, y):
 def conv2d(input_, output_dim, 
        k_h=5, k_w=5, d_h=2, d_w=2, stddev=0.02,
        name="conv2d"):
+  """
+  convolution operatrion for GAN
+  """
   with tf.variable_scope(name):
     w = tf.get_variable('w', [k_h, k_w, input_.get_shape()[-1], output_dim],
               initializer=tf.truncated_normal_initializer(stddev=stddev))
@@ -65,6 +69,9 @@ def conv2d(input_, output_dim,
 def deconv2d(input_, output_shape,
        k_h=5, k_w=5, d_h=2, d_w=2, stddev=0.02,
        name="deconv2d", with_w=False):
+  """
+  deconvolution operation for GAN
+  """
   with tf.variable_scope(name):
     # filter : [height, width, output_channels, in_channels]
     w = tf.get_variable('w', [k_h, k_w, output_shape[-1], input_.get_shape()[-1]],
@@ -88,9 +95,15 @@ def deconv2d(input_, output_shape,
       return deconv
      
 def lrelu(x, leak=0.2, name="lrelu"):
+  """
+  leaky relu function
+  """
   return tf.maximum(x, leak*x)
 
 def linear(input_, output_size, scope=None, stddev=0.02, bias_start=0.0, with_w=False):
+  """
+  linear transformation
+  """
   shape = input_.get_shape().as_list()
 
   with tf.variable_scope(scope or "Linear"):
