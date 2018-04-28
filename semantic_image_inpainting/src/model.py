@@ -232,6 +232,7 @@ class ModelInpaint():
 
         return gi, go, gl, di, do
 
+    # zz2517 wb2328
     @staticmethod
     def imtransform(img):
         """
@@ -239,6 +240,7 @@ class ModelInpaint():
         """
         return np.array(img) / 127.5-1
 
+    # zz2517 wb2328
     @staticmethod
     def iminvtransform(img):
         """
@@ -289,6 +291,7 @@ class ModelInpaint():
         assert(len(mask.shape)==2)
         return np.repeat(mask[:,:,np.newaxis], 3, axis=2)
 
+    # zz2517 wb2328
     @staticmethod
     def poissonblending(img1, img2, mask):
         """Helper: interface to external poisson blending"""
