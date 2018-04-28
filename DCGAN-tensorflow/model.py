@@ -75,6 +75,7 @@ class DCGAN(object):
 
   def build_model(self):
     """
+    Wentian Bao wb2328
     Use initial values to build networks
     """
     #Whether images need to be cropped
@@ -124,6 +125,8 @@ class DCGAN(object):
 
   def train(self, config):
     """
+    Wentian Bao wb238
+    Zhang Zhang zz2517
     main worker function for training.
     """
     #d_optimizor only optimizes variables of discriminator
@@ -253,6 +256,8 @@ class DCGAN(object):
   #Define Discriminator
   def discriminator(self, image, reuse=False):
   """
+  Wentian Bao wb238
+  Zhang Zhang zz2517
   Arguments:
   image: images from training set and generator;
   reuse: whether reuse the discriminator;
@@ -275,6 +280,8 @@ class DCGAN(object):
   #define generator
   def generator(self, z):
     """
+    Wentian Bao wb238
+    Zhang Zhang zz2517
     Arguments:
     z: default 100 dimensional vectors from latent spaces, sampled from uniform distribution;
     Return:
@@ -301,6 +308,7 @@ class DCGAN(object):
   @property
   def model_dir(self):
   """
+  Zhang Zhang zz2517
   Return the model's name 
   """
     return "{}_{}_{}_{}".format(
@@ -323,6 +331,7 @@ class DCGAN(object):
 
   def load(self, checkpoint_dir):
   """
+  Zhang Zhang zz2517
   Load checkpoints
   """
     import re
