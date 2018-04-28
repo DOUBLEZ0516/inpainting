@@ -1,3 +1,7 @@
+"""
+author: Wentian Bao, wb2328
+        Zhang Zhang, zz2517
+"""
 from __future__ import division
 import os
 import time
