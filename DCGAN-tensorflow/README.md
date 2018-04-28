@@ -37,3 +37,6 @@ To train a model with prepocessed dataset:
 Wentian Bao wb2328
 Zhang Zhang zz2517
 Haotian Zhang hz2475
+
+## Github Repo
+https://github.com/DOUBLEZ0516/inpainting
