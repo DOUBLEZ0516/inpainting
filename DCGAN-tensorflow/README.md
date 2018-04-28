@@ -12,6 +12,12 @@ Tensorflow implementation of [Deep Convolutional Generative Adversarial Networks
 - [SciPy](http://www.scipy.org/install.html)
 - [pillow](https://github.com/python-pillow/Pillow)
 
+## Organizations
+root
+- main.py: main function
+- model.py: DCGAN model, contains generator, discriminator and training function
+- ops.py: Operations file, contains conv2d, deconv2d, linear, relu, leakyRelu, etc.
+- utils.py: Utilities file, contains I/O functions and other utility functions.
 
 ## Usage
 
@@ -24,7 +30,7 @@ To train a model with prepocessed dataset:
 
 ## Results
 
-![result](assets/fig3.png)
+![result](fig3.png)
 
 ## Author
 
