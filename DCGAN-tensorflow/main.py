@@ -35,6 +35,10 @@ flags.DEFINE_integer("generate_test_images", 100, "Number of images to generate 
 FLAGS = flags.FLAGS
 
 def main(_):
+  """
+  Wentian Bao wb2328
+  Zhang Zhang zz2517
+  """
   pp.pprint(flags.FLAGS.__flags)
 
   if FLAGS.input_width is None:
