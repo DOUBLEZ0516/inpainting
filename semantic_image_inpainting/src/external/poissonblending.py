@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 #
 #
-# Original code from https://github.com/parosky/poissonblending 
-
+# original author: parosky
+# github link: https://github.com/parosky/poissonblending 
 import numpy as np
 import scipy.sparse
 import PIL.Image
