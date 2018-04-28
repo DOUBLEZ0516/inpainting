@@ -3,7 +3,7 @@ import numpy as np
 import external.poissonblending as blending
 from scipy.signal import convolve2d
 
-
+# zz2517 wb2328
 class ModelInpaint():
     """
      This function defines the model of Semantic Inpainting
