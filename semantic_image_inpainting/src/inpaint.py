@@ -7,6 +7,11 @@ from glob import glob
 
 from model import ModelInpaint
 
+
+
+# original author: moodoki 
+# edited by zz2517 wb2328
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--model_file', type=str, help="Pretrained GAN model")
 parser.add_argument('--lr', type=float, default=0.01)
