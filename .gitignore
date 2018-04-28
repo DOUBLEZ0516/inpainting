@@ -1,3 +1,4 @@
 DCGAN-tensorflow/data/*
 DCGAN-tensorflow/logs/*
 DCGAN-tensorflow/checkpoint/*
+wGAN/logs/*
