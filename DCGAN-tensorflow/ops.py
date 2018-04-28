@@ -13,6 +13,7 @@ from tensorflow.python.framework import ops
 from utils import *
 
 #be compatible with different tensorflow versions
+#Wentian Bao wb2328, Zhang Zhang zz2517
 try:
   image_summary = tf.image_summary
   scalar_summary = tf.scalar_summary
@@ -42,7 +43,10 @@ def batch_norm(x, train=True, epsilon=1e-5, momentum = 0.9):
                     is_training=train)
 
 def conv_cond_concat(x, y):
-  """Concatenate conditioning vector on feature map axis."""
+  """
+  Wentian Bao wb2328
+  Concatenate conditioning vector on feature map axis.
+  """
   x_shapes = x.get_shape()
   y_shapes = y.get_shape()
   return concat([
@@ -52,6 +56,8 @@ def conv2d(input_, output_dim,
        k_h=5, k_w=5, d_h=2, d_w=2, stddev=0.02,
        name="conv2d"):
   """
+  Wentian Bao wb2328
+  Zhang Zhang zz2517
   convolution operatrion for GAN
   """
   with tf.variable_scope(name):
@@ -68,6 +74,8 @@ def deconv2d(input_, output_shape,
        k_h=5, k_w=5, d_h=2, d_w=2, stddev=0.02,
        name="deconv2d"):
   """
+  Wentian Bao wb2328
+  Zhang Zhang zz2517
   deconvolution operation for GAN
   """
   with tf.variable_scope(name):
@@ -83,12 +91,16 @@ def deconv2d(input_, output_shape,
      
 def lrelu(x, leak=0.2, name="lrelu"):
   """
+  Wentian Bao wb2328
+  Zhang Zhang zz2517
   leaky relu function
   """
   return tf.maximum(x, leak*x)
 
 def linear(input_, output_size, scope=None, stddev=0.02, bias_start=0.0, with_w=False):
   """
+  Wentian Bao wb2328
+  Zhang Zhang zz2517
   linear transformation
   """
   shape = input_.get_shape().as_list()
