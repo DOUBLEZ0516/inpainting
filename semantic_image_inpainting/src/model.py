@@ -54,7 +54,7 @@ class ModelInpaint():
         self.Wstep = config.Wstep
 
 
-    # zz2517 wb2328
+    # zz2517
     def prepare(self, images, imask, nsize=7):
         """
         This function performs
@@ -102,7 +102,7 @@ class ModelInpaint():
             images_out[i,:,:,:] += images_in[i,0,0,0] - images_out[i,0,0,0]
         return images_out
     
-    # wb2328
+    # zz2517
     def build_semantic_model(self):
         """
         This function takes into latent variable z, mask and image to calculate
@@ -158,7 +158,7 @@ class ModelInpaint():
                 print('Iteration {}: {}'.format(i, np.mean(loss)))
 
         return imout
-    # wb2328
+    # zz2517
     def inpaint(self, image, mask, blend=True):
         """
         This function performs inpainting on image by calling
@@ -248,7 +248,7 @@ class ModelInpaint():
         """
         return (np.array(img) + 1.0) / 2.0
 
-    # zz2517
+    # wb2328
     @staticmethod
     def genBinarizeMask(mask, dtype=np.float32):
         """
@@ -281,7 +281,7 @@ class ModelInpaint():
 
         return np.repeat(mask[np.newaxis, :, :, :], batch_size, axis=0)
 
-    # zz2517 wb2328
+    # wb2328
     @staticmethod
     def duplicateMask(mask):
         """
