@@ -20,7 +20,7 @@ We also made an improvement on trianing weight mask W.
 
 Prerequisit
 ------------
- - Tensorflow >= 1.0
+ - Tensorflow = 1.7.0
  - scipy + PIL/pillow (image io)
  - pyamg (for Poisson blending)
 
