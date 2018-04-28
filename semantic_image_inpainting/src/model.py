@@ -77,7 +77,7 @@ class ModelInpaint():
         ncpy = min(num_images, self.batch_size)
         self.images_data[:ncpy, :, :, :] = images[:ncpy, :, :, :].copy()
 
-    # zz2517 wb2328
+    # wb2328
     def blending(self, g_out, blend = True):
         """
         This function applies poisson blending using binary mask.
@@ -102,7 +102,7 @@ class ModelInpaint():
             images_out[i,:,:,:] += images_in[i,0,0,0] - images_out[i,0,0,0]
         return images_out
     
-    # zz2517 wb2328
+    # wb2328
     def build_semantic_model(self):
         """
         This function takes into latent variable z, mask and image to calculate
@@ -126,7 +126,7 @@ class ModelInpaint():
             #masks gradient
             self.masks_grad = tf.gradients(self.context_loss, self.masks)
     
-    # zz2517 wb2328
+    # zz2517
     def backpropagation(self, verbose=True):
         """
         This function performs backpropagation to input by gradient decent to
@@ -158,7 +158,7 @@ class ModelInpaint():
                 print('Iteration {}: {}'.format(i, np.mean(loss)))
 
         return imout
-    # zz2517 wb2328
+    # wb2328
     def inpaint(self, image, mask, blend=True):
         """
         This function performs inpainting on image by calling
@@ -173,6 +173,7 @@ class ModelInpaint():
         imout = self.backpropagation()
         return self.blending(imout, blend), imout
 
+    # wb2328
     @staticmethod
     def loadpb(filename, model_name='dcgan'):
         """
@@ -203,7 +204,7 @@ class ModelInpaint():
 
         return graph, graph_def
     
-    # zz2517 wb2328
+    # zz2517
     @staticmethod
     def load_layers(graph, modelfilename, model_name, gen_input, gen_output, gen_loss, disc_input, disc_output):
         """
@@ -245,7 +246,7 @@ class ModelInpaint():
         """
         return (np.array(img) + 1.0) / 2.0
 
-    # zz2517 wb2328
+    # zz2517
     @staticmethod
     def genBinarizeMask(mask, dtype=np.float32):
         """
@@ -262,7 +263,7 @@ class ModelInpaint():
             bmask = np.array(bmask * 255, dtype=np.uint8)
         return ModelInpaint.duplicateMask(bmask)
 
-    # zz2517 wb2328
+    # zz2517
     @staticmethod
     def genWeightedMask(input_mask, batch_size, window_size=7):
         """
