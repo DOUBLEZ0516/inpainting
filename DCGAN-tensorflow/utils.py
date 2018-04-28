@@ -1,5 +1,8 @@
 """
-Some codes from https://github.com/Newmu/dcgan_code
+author: carpedm20@github
+editor: Wentian Bao, wb2328
+        Zhang Zhang, zz2517
+        Hangtian Zhang, hz2475
 """
 from __future__ import division
 import math
