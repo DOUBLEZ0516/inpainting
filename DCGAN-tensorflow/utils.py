@@ -23,6 +23,7 @@ get_stddev = lambda x, k_h, k_w: 1/math.sqrt(k_w*k_h*x.get_shape()[-1])
 
 def show_all_variables():
 """
+Zhang Zhang zz2517
 print all the varibles
 """
   model_vars = tf.trainable_variables()
@@ -36,18 +37,30 @@ def get_image(image_path, input_height, input_width,
                    resize_height, resize_width, crop)
 
 def save_images(images, size, image_path):
+  """
+  Zhang Zhang zz2517
+  """
   return imsave(inverse_transform(images), size, image_path)
 
 def imread(path, grayscale = False):
+  """
+  Zhang Zhang zz2517
+  """
   if (grayscale):
     return scipy.misc.imread(path, flatten = True).astype(np.float)
   else:
     return scipy.misc.imread(path).astype(np.float)
 
 def merge_images(images, size):
+  """
+  Zhang Zhang zz2517
+  """
   return inverse_transform(images)
 
 def merge(images, size):
+  """
+  Zhang Zhang zz2517
+  """
   h, w = images.shape[1], images.shape[2]
   if (images.shape[3] in (3,4)):
     c = images.shape[3]
@@ -69,11 +82,17 @@ def merge(images, size):
                      'must have dimensions: HxW or HxWx3 or HxWx4')
 
 def imsave(images, size, path):
+  """
+  Zhang Zhang zz2517
+  """
   image = np.squeeze(merge(images, size))
   return scipy.misc.imsave(path, image)
 
 def center_crop(x, crop_h, crop_w,
                 resize_h=64, resize_w=64):
+  """
+  Zhang Zhang zz2517
+  """
   if crop_w is None:
     crop_w = crop_h
   h, w = x.shape[:2]
@@ -84,6 +103,9 @@ def center_crop(x, crop_h, crop_w,
 
 def transform(image, input_height, input_width, 
               resize_height=64, resize_width=64, crop=True):
+  """
+  Zhang Zhang zz2517
+  """
   if crop:
     cropped_image = center_crop(
       image, input_height, input_width, 
@@ -93,9 +115,15 @@ def transform(image, input_height, input_width,
   return np.array(cropped_image)/127.5 - 1.
 
 def inverse_transform(images):
+  """
+  Zhang Zhang zz2517
+  """
   return (images+1.)/2.
 
 def to_json(output_path, *layers):
+  """
+  Wentian Bao wb2328
+  """
   with open(output_path, "w") as layer_f:
     lines = ""
     for w, b, bn in layers:
@@ -159,6 +187,9 @@ def to_json(output_path, *layers):
     layer_f.write(" ".join(lines.replace("'","").split()))
 
 def make_gif(images, fname, duration=2, true_image=False):
+  """
+  Wentian Bao wb2328
+  """
   import moviepy.editor as mpy
 
   def make_frame(t):
@@ -176,6 +207,9 @@ def make_gif(images, fname, duration=2, true_image=False):
   clip.write_gif(fname, fps = len(images) / duration)
 
 def visualize(sess, dcgan, config, option):
+  """
+  Wentian Bao wb2328
+  """
   image_frame_dim = int(math.ceil(config.batch_size**.5))
   if option == 0:
     z_sample = np.random.uniform(-0.5, 0.5, size=(config.batch_size, dcgan.z_dim))
@@ -250,6 +284,9 @@ def visualize(sess, dcgan, config, option):
 
 
 def image_manifold_size(num_images):
+  """
+  Zhang Zhang zz2517
+  """
   manifold_h = int(np.floor(np.sqrt(num_images)))
   manifold_w = int(np.ceil(np.sqrt(num_images)))
   assert manifold_h * manifold_w == num_images
