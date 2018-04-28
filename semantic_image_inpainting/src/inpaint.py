@@ -64,7 +64,7 @@ def saveimages(outimages, prefix='gen'):
         filename = os.path.join(args.outDir, filename)
         scipy.misc.imsave(filename, outimages[i, :, :, :])
 
-
+# zz2517 wb2328
 def gen_mask(maskType):
     """
     This function generates input masks
@@ -94,7 +94,7 @@ def gen_mask(maskType):
         assert (False)
     return mask
 
-
+# zz2517 wb2328
 def main():
     """
     Main function
