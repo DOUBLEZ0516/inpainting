@@ -18,7 +18,7 @@ Implementation of proposed cost function and backpropogation to input.
 
 We also made an improvement on trianing weight mask W.
 
-Dependencies
+Prerequisit
 ------------
  - Tensorflow >= 1.0
  - scipy + PIL/pillow (image io)
@@ -67,3 +67,4 @@ python3 src/inpaint.py --model_file graphs/model_128_64_64_1.pb \
     --maskType mask_32_128 --inDir testcars_128 --imgSize 128\
     --nIter 1000 --blend --Wstep 1000 --imgExt jpeg
 ```
+The inpainted images will be stored at file ./completions. Both generated images that are used to inpaint and inpainted images will be stored.
